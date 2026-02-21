@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th2 21, 2026 lúc 07:52 AM
+-- Thời gian đã tạo: Th2 21, 2026 lúc 08:11 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `bike_marketplace`
+-- Cơ sở dữ liệu: `schema.sql`
 --
 
 -- --------------------------------------------------------
@@ -37,7 +37,7 @@ CREATE TABLE `bikes` (
   `category_id` int(11) DEFAULT NULL,
   `frame_size` varchar(50) DEFAULT NULL,
   `bike_condition` enum('NEW','USED_LIKE_NEW','USED_GOOD','USED_FAIR') DEFAULT NULL,
-  `STATUS` enum('PENDING','APPROVED','REJECTED','SOLD') DEFAULT 'PENDING',
+  `status` enum('PENDING','APPROVED','REJECTED','SOLD') DEFAULT 'PENDING',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -122,7 +122,7 @@ CREATE TABLE `orders` (
   `seller_id` int(11) NOT NULL,
   `total_amount` decimal(12,2) NOT NULL,
   `deposit_amount` decimal(12,2) DEFAULT NULL,
-  `STATUS` enum('PENDING','DEPOSITED','COMPLETED','CANCELLED') DEFAULT 'PENDING',
+  `status` enum('PENDING','DEPOSITED','COMPLETED','CANCELLED') DEFAULT 'PENDING',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -137,7 +137,7 @@ CREATE TABLE `reports` (
   `reporter_id` int(11) NOT NULL,
   `bike_id` int(11) DEFAULT NULL,
   `reason` text NOT NULL,
-  `STATUS` enum('PENDING','RESOLVED','REJECTED') DEFAULT 'PENDING',
+  `status` enum('PENDING','RESOLVED','REJECTED') DEFAULT 'PENDING',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -153,7 +153,7 @@ CREATE TABLE `reviews` (
   `buyer_id` int(11) NOT NULL,
   `seller_id` int(11) NOT NULL,
   `rating` int(11) DEFAULT NULL CHECK (`rating` between 1 and 5),
-  `COMMENT` text DEFAULT NULL,
+  `comment` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -188,11 +188,11 @@ CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
   `full_name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `PASSWORD` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `phone` varchar(20) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `role_id` int(11) NOT NULL,
-  `STATUS` enum('ACTIVE','BANNED') DEFAULT 'ACTIVE',
+  `status` enum('ACTIVE','BANNED') DEFAULT 'ACTIVE',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
